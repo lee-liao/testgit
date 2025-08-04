@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk-17'  // 根据实际路径修改
-        GIT_CREDENTIAL_ID = 'github_user_pwd'
+        GIT_CREDENTIALS_ID = 'github_user_pwd'
         GIT_REPO = 'https://github.com/lee-liao/NA-AIA-main.git'
         GIT_BRANCH = 'main'
         
