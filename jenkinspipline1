@@ -2,16 +2,16 @@ pipeline {
     agent any
 
     environment {
-        GIT_REPO = 'https://github.com/StackOps-bridge/applied-devops.git'
-        GIT_BRANCH = 'develop'
-        GIT_CREDENTIALS_ID = 'github_user_pwd'  // Set up in Jenkins → Credentials
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-17'  // 根据实际路径修改
+        GIT_CREDENTIAL_ID = 'github_user_pwd'
+        GIT_REPO = 'https://github.com/lee-liao/NA-AIA-main.git'
+        GIT_BRANCH = 'main'
         
-        NGINX_HTML = 'C:\\apps\\nginx-1.28.0\\html\\'
-        API_DIR = 'c:\\apps\\nginx-1.28.0\\html\\api'
+        NGINX_HTML = 'D:\\Program Files\\nginx-1.28.0\\html\\'
+        API_DIR = 'D:\\Program Files\\nginx-1.28.0\\html\\api'
         API_NAME_USER = 'userAPI'
         API_NAME_EVENT = "eventAPI"
-        
-        
+
         NEXUS_URL = 'http://localhost:8081'
         NEXUS_REPO = 'maven-snapshots'
         GROUP_ID = 'com.stackops'
