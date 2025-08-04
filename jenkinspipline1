@@ -93,11 +93,10 @@ pipeline {
                         bat checkCommand
                         
                         def targetJar = "${fullPath}\\userAPI.jar"
-                        bat "copy userAPI-latest.jar ${targetJar}"
+                        bat "copy userAPI-latest.jar \"${targetJar}\""
 
                         // Example: run the JAR
-                        //bat "start java -jar ${targetJar} --server.port=9090"
-                        bat "start /B cmd /C \"java -jar ${targetJar} --server.port=9090 > ${fullPath}\\userAPI.log 2>&1\""
+                        bat "start /B cmd /C \"java -jar \"${targetJar}\" --server.port=9090 > \"${fullPath}\"\\userAPI.log 2>&1\""
                     }    
                 }
             }
