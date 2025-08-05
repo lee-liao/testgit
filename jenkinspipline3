@@ -50,7 +50,7 @@ pipeline {
                             try {
                                 bat """
                                       gradlew.bat publish ^
-                                        -PnexusRepoUrl=http://localhost:8081/repository/maven-releases/ ^
+                                        -PnexusRepoUrl=http://localhost:8081/repository/maven-central/ ^
                                         -PnexusUsername=%NEXUS_USER% ^
                                         -PnexusPassword=%NEXUS_PASS% ^
                                         -Pversion=${VERSION} ^
