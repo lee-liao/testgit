@@ -13,7 +13,7 @@ pipeline {
         API_NAME_EVENT = "eventAPI"
 
         NEXUS_URL = 'http://localhost:8081'
-        NEXUS_REPO = 'maven-snapshots'
+        NEXUS_REPO = 'maven-releases'
         GROUP_ID = 'com.stackops'
         ARTIFACT_ID = 'userAPI'
         ARTIFACT_PATH = "${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}"
