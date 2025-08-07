@@ -51,7 +51,7 @@ pipeline{
                     def checkCommand = "if not exist \"${fullPath}\" mkdir \"${fullPath}\""
                     bat checkCommand
     
-                    def jarPath = "userAPI\\build\\libs\\userAPI-1.0.jar"
+                    def jarPath = "userAPI\\build\\libs\\userAPI.jar"
                     def targetJar = "${fullPath}\\userAPI.jar"
                     bat "copy \"${jarPath}\" \"${targetJar}\""
     
@@ -62,7 +62,7 @@ pipeline{
                     bat checkCommand1
     
                     // Example: copy jar to the target
-                    def jarPath1 = "eventAPI\\build\\libs\\eventAPI-1.0.jar"
+                    def jarPath1 = "eventAPI\\build\\libs\\eventAPI.jar"
                     def targetJar1 = "${fullPath1}\\eventAPI.jar"
                     bat "copy \"${jarPath1}\" \"${targetJar1}\""
     
