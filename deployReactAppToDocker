@@ -1,0 +1,81 @@
+pipeline{
+    agent any
+    environment{
+        GIT_CREDENTIAL_ID = 'github_user_pwd'
+        GIT_REPO = 'https://github.com/lee-liao/NA-AIA-main.git'
+        GIT_BRANCH = 'main'
+        
+        IMAGE_NAME = "react-app"
+        VERSION = "1.0.${BUILD_NUMBER}"   // Auto-versioned using Jenkins build number
+        CONTAINER_NAME = "react-ui"
+    }
+    
+    stages{
+        stage('Check out source code'){
+            steps{
+                echo "start check out code from ${GIT_REPO}"
+                git credentialsId: "${GIT_CREDENTIAL_ID}", url:"${GIT_REPO}", branch:"${GIT_BRANCH}"
+                echo "check out done"
+            }    
+        }
+        stage('build Docker Image'){
+            steps{
+                dir('client_na_aia'){
+                    script{
+                        try {
+                            echo "Starting Docker build..."
+                            bat "docker build -t %IMAGE_NAME%:%VERSION% ."
+                        } catch (err) {
+                            echo "Caught error during Docker build: ${err}"
+                            error "Docker build failed: ${err.getMessage()}"
+                        }
+                    }    
+
+                }
+            }
+        }
+        stage('Stop Old Container') {
+            steps {
+                script {
+                    try {
+                        def containerId = bat(
+                            script: '@echo off && docker ps -a -q -f name=react-ui',
+                            returnStdout: true
+                        ).trim()
+                        if (containerId) {
+                            echo "Container react-ui exists with ID: ${containerId}"
+                            // Use `|| exit 0` to suppress non-zero exit codes
+                            bat(script: '@echo off && docker stop react-ui || exit 0')
+                            bat(script: '@echo off && docker rm react-ui || exit 0')
+                        } else {
+                            echo "Container react-ui does not exist. Skipping stop/rm."
+                        }
+                    } catch (err) {
+                        echo "Caught error during stop docker: ${err}"
+                        error "Docker remove failed: ${err.getMessage()}"
+                    }
+                }
+            }
+        }
+      
+        stage('Run Container') {
+            steps {
+                script {
+                    bat """
+                        docker run -d --name ${CONTAINER_NAME} -p 3000:80 ${IMAGE_NAME}:${VERSION}
+                    """
+                }
+            }
+        }
+      }
+    
+    post {
+        failure {
+            echo 'Pipeline failed!'
+        }
+        success {
+            echo 'Deployment completed successfully!'
+        }
+    }
+
+}
