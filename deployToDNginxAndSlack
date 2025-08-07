@@ -62,7 +62,7 @@ pipeline{
                     bat checkCommand1
     
                     // Example: copy jar to the target
-                    def jarPath1 = "eventAPI\\build\\libs\\eventAPI.jar"
+                    def jarPath1 = "eventAPI\\build\\libs\\eventAPI-1.0.jar"
                     def targetJar1 = "${fullPath1}\\eventAPI.jar"
                     bat "copy \"${jarPath1}\" \"${targetJar1}\""
     
