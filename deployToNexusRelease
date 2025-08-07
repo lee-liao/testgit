@@ -13,7 +13,7 @@ pipeline {
         API_NAME_EVENT = "eventAPI"
 
         NEXUS_URL = 'http://localhost:8081'
-        NEXUS_REPO = 'maven-snapshots'
+        NEXUS_REPO = 'maven-releases'
         GROUP_ID = 'com.stackops'
         ARTIFACT_ID = 'userAPI'
         ARTIFACT_PATH = "${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}"
@@ -46,7 +46,7 @@ pipeline {
                 dir('userAPI') {
                     withCredentials([usernamePassword(credentialsId: 'nexus_connect', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
                         script {
-                            def VERSION = "1.1.${BUILD_NUMBER}-SNAPSHOT"
+                            def VERSION = "1.1.${BUILD_NUMBER}"
                             try {
                                 bat """
                                       gradlew.bat publish ^
