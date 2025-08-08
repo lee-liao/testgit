@@ -93,7 +93,7 @@ pipeline {
                         -e SPRING_DATA_MONGODB_USERNAME=%MONGO_USER% ^
                         -e SPRING_DATA_MONGODB_PASSWORD=%MONGO_PASS% ^
                         -e SPRING_DATA_MONGODB_DATABASE=%MONGO_DB% ^
-                        -p 9061:8080 %IMAGE_NAME%:%VERSION%
+                        -p 9090:9090 %IMAGE_NAME%:%VERSION%
                 """
             }
         }
