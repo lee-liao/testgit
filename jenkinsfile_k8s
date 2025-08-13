@@ -1,0 +1,80 @@
+pipeline{
+    agent any
+    
+    environment{
+        GIT_CREDENTIAL_ID = 'github_user_pwd'
+        GIT_REPO = 'https://github.com/StackOps-bridge/applied-devops.git'
+        GIT_BRANCH = 'develop'
+
+        REGISTRY = 'host.docker.internal:9081'
+        IMAGE_NAME = 'userapi_img'
+        VERSION = 'latest'
+    }
+    
+    stages{
+        stage('Check out source code'){
+            steps{
+                echo "start check out code from ${GIT_REPO}"
+                git credentialsId: "${GIT_CREDENTIAL_ID}", url:"${GIT_REPO}", branch:"${GIT_BRANCH}"
+                echo "check out done"
+            }    
+        }
+        stage('test kubectl') {
+            steps {
+                bat """
+                    set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+                    kubectl get pods
+                """
+            }
+        }
+        stage('Build Spring Boot JAR') {
+            steps {
+                dir('userAPI') {
+                    bat 'gradlew clean build'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('userAPI') {
+                    bat "docker build -t %REGISTRY%/%IMAGE_NAME%:%VERSION% ."
+    
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                 dir('userAPI') {
+                    withCredentials([usernamePassword(credentialsId: 'nexus_connect', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                        script {
+                            bat "docker login host.docker.internal:9081 -u %NEXUS_USER% -p %NEXUS_PASS%"
+                            bat "docker push %REGISTRY%/%IMAGE_NAME%:%VERSION%"
+                        }
+                    }        
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat """
+                    set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+                    kubectl apply -f devOps\\k8s\\userapi-deployment.yaml
+                    kubectl rollout status deployment/userapi-deployment
+                """
+            }
+        }
+
+    }
+    
+    post {
+        failure {
+            echo 'Pipeline failed!'
+        }
+        success {
+            echo 'Deployment completed successfully!'
+        }
+    }
+}
