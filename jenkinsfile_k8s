@@ -3,8 +3,8 @@ pipeline{
     
     environment{
         GIT_CREDENTIAL_ID = 'github_user_pwd'
-        GIT_REPO = 'https://github.com/StackOps-bridge/applied-devops.git'
-        GIT_BRANCH = 'develop'
+        GIT_REPO = 'https://github.com/lee-liao/NA-AIA-main.git'
+        GIT_BRANCH = 'main'
 
         REGISTRY = 'host.docker.internal:9081'
         IMAGE_NAME = 'userapi_img'
@@ -79,3 +79,4 @@ pipeline{
     }
 
 }
+
