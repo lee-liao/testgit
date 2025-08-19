@@ -6,7 +6,7 @@ pipeline{
         GIT_REPO = 'https://github.com/lee-liao/NA-AIA-main.git'
         GIT_BRANCH = 'main'
 
-        REGISTRY = 'host.docker.internal:9081'
+        REGISTRY = 'host.docker.internal:8081'
         IMAGE_NAME = 'userapi_img'
         VERSION = 'latest'
     }
@@ -79,6 +79,7 @@ pipeline{
     }
 
 }
+
 
 
 
