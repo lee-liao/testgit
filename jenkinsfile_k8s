@@ -49,7 +49,7 @@ pipeline{
                  dir('userAPI') {
                     withCredentials([usernamePassword(credentialsId: 'nexus_connect', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
                         script {
-                            bat "docker login host.docker.internal:9081 -u %NEXUS_USER% -p %NEXUS_PASS%"
+                            bat "docker login host.docker.internal:8081 -u %NEXUS_USER% -p %NEXUS_PASS%"
                             bat "docker push %REGISTRY%/%IMAGE_NAME%:%VERSION%"
                         }
                     }        
@@ -79,4 +79,5 @@ pipeline{
     }
 
 }
+
 
