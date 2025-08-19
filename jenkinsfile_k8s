@@ -44,19 +44,6 @@ pipeline{
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                 dir('userAPI') {
-                    withCredentials([usernamePassword(credentialsId: 'nexus_connect', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                        script {
-                            bat "docker login host.docker.internal:8081 -u %NEXUS_USER% -p %NEXUS_PASS%"
-                            bat "docker push %REGISTRY%/%IMAGE_NAME%:%VERSION%"
-                        }
-                    }        
-                }
-            }
-        }
-
         stage('Deploy to Kubernetes') {
             steps {
                 bat """
@@ -79,6 +66,7 @@ pipeline{
     }
 
 }
+
 
 
 
