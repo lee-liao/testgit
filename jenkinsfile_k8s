@@ -22,7 +22,7 @@ pipeline{
         stage('test kubectl') {
             steps {
                 bat """
-                    set KUBECONFIG=C:\\ProgramData\\Jenkins\\.kube\\config
+                    set KUBECONFIG=D:\\ProgramData\\Jenkins\\.kube\\config
                     kubectl get pods
                 """
             }
@@ -77,4 +77,5 @@ pipeline{
             echo 'Deployment completed successfully!'
         }
     }
+
 }
