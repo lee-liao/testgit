@@ -7,7 +7,7 @@ pipeline{
         GIT_BRANCH = 'main'
 
         REGISTRY = 'host.docker.internal:9081'
-        IMAGE_NAME = 'userapi_img'
+        IMAGE_NAME = 'userapi'
         VERSION = 'latest'
     }
     
@@ -79,6 +79,7 @@ pipeline{
     }
 
 }
+
 
 
 
