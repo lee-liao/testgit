@@ -62,7 +62,7 @@ pipeline{
                 bat """
                     set KUBECONFIG=D:\\ProgramData\\Jenkins\\.kube\\config
                     kubectl apply -f devOps\\k8s\\userapi-deployment.yaml
-                    kubectl rollout status deployment/userapi-deployment
+                    kubectl rollout status deployment/userapi
                 """
             }
         }
@@ -79,6 +79,7 @@ pipeline{
     }
 
 }
+
 
 
 
