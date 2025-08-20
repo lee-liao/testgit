@@ -61,8 +61,7 @@ pipeline{
             steps {
                 bat """
                     set KUBECONFIG=D:\\ProgramData\\Jenkins\\.kube\\config
-                    kubectl rollout undo deployment/userapi 
-                    kubectl apply -f devOps\\k8s\\userapi-deployment.yaml
+                    kubectl apply -f devOps\\k8s\\userapi-deployment.yaml --force
                     kubectl rollout status deployment/userapi
                 """
             }
@@ -80,6 +79,7 @@ pipeline{
     }
 
 }
+
 
 
 
